@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="font/iconfont.css" />
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .main {
+            width: 100%;
+            height: 700px;
+
+        }
+
+        .disc1 {
+            width: 525px;
+            height: 700px;
+            margin: auto;
+            position: relative;
+            border-radius: 100%;
+            overflow: hidden;
+        }
+
+        .disc2 {
+            width: 4200px;
+            height: 700px;
+            position: absolute;
+            left: 0px;
+            list-style: none;
+        }
+
+        .disc2 li {
+            float: left;
+        }
+
+        .disc2 li img {
+            max-width: 700px;
+            height: 700px;
+            vertical-align: middle;
+        }
+
+        #sub {
+            position: absolute;
+            right: 155px;
+            bottom: 30px;
+            line-height: 20px;
+            text-align: center;
+            list-style: none;
+        }
+
+        #sub li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #sub li.current {
+            background: yellow;
+        }
+
+        #previous {
+            position: absolute;
+            left: 0px;
+            top: 320px;
+            z-index: 2;
+            color: red;
+            transform: rotate(90deg);
+        }
+
+        #next {
+            position: absolute;
+            right: 0px;
+            top: 320px;
+            z-index: 2;
+            color: red;
+            transform: rotate(-90deg);
+        }
+
+        .disc1 span {
+            font-size: 30px;
+        }
+
+        #btn {
+            font-size: 15px;
+            width: 100px;
+            height: 30px;
+        }
+
+        .hi {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <input type="button" id="btn" value="自动播放" />
+    <div class="main">
+        <div class="disc1">
+            <div id="previous">
+                <span class="font iconfont icon-love"></span>
+            </div>
+            <ul class="disc2">
+                <li><img src="img/1.jpg" /></li>
+                <li><img src="img/2.jpg" /></li>
+                <li><img src="img/3.jpg" /></li>
+                <li><img src="img/4.jpg" /></li>
+                <li><img src="img/5.jpg" /></li>
+                <li><img src="img/6.jpg" /></li>
+                <li><img src="img/7.jpg" /></li>
+                <li><img src="img/1.jpg" /></li>
+            </ul>
+            <ol id="sub">
+                <li class="current">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+            </ol>
+            <div id="next">
+                <span class="font iconfont icon-love"></span>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        //页面轮播图
+        var btn = document.querySelector('#btn');
+        var disc1 = document.querySelector('.disc1');
+        var hid = document.querySelector('.disc2');
+        var list = document.querySelectorAll('#sub li');
+        var ol = document.querySelector('ol');
+        var pre = document.getElementById('previous');
+        var next = document.getElementById('next');
+
+        // animate(hid,-525);
+        next.onclick = function () {
+            next_img();
+        }
+        pre.onclick = function () {
+            pre_img();
+        }
+        // var firstLi = hid.children[0];
+        // // 克隆li  cloneNode()  复制节点  
+        // // 参数  true  复制节点中的内容
+        // //       false  只复制当前节点，不复制里面的内容
+        // var cloneLi = firstLi.cloneNode(true);
+        // hid.appendChild(cloneLi);
+        ol.onclick = function (e) {
+            e = e || window.event;
+            var newleft = 0;
+            var target = e.target;
+            //获取当前点击得li得序号
+            var i = parseInt(target.innerText);
+            if (target.nodeName == "LI") {
+                // console.log(i);
+                //获取之前点击得li得序号
+                var prev = document.querySelector('.current');
+                // console.log(j);
+                prev.className = '';
+                target.className = "current";
+                newleft = -(i - 1) * 525;
+                // console.log(newleft);
+                animate(hid, newleft);
+            }
+        }
+        //js动画函数
+        function animate(element, target) {
+            if (element.timeId) {
+                clearInterval(element.timeId);
+                element.timeId = null;
+            }
+            var timeId = setInterval(() => {
+                var step = 30;
+                var current = element.offsetLeft;
+                if (current > target) {
+                    var step = -Math.abs(step);
+                }
+                if (Math.abs(current - target) >= Math.abs(step)) {
+                    current += step;
+                    element.style.left = current + 'px';
+                } else {
+                    clearInterval(timeId);
+                    element.style.left = target + 'px';
+                }
+            }, 10);
+        }
+        var index = 0;
+        var count = list.length;
+        // console.log(count);
+        function next_img() {
+            if (index == count) {
+                hid.style.left = '0px';
+                index = 0;
+            }
+            index++;
+            if (index < count) {
+                ol.children[index].click();
+            } else {
+                animate(hid, (index) * -525);
+                var prev = document.querySelector('ol>.current');
+                prev.className = '';
+                ol.children[0].className = 'current';
+            }
+            console.log(index);
+        }
+
+        function pre_img() {
+            if (index == 0) {
+                hid.style.left = -(7 * 525) + 'px'
+                index = count;
+            }
+            index--;
+            if (index >= 0) {
+                ol.children[index].click();
+            }
+        }
+        var timer = null;
+        function autoplay() {
+            timer = setInterval(function () {
+                next_img();
+            }, 1000);
+        }
+        autoplay();
+        disc1.onmouseover = function () {
+            clearInterval(timer);
+        }
+    }
+</script>
+
+</html>
