@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"wen992.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1.准备工作   在html文件中引入echart.js Echart资源获取 https:&#x2F;&#x2F;www.jsdelivr.com&#x2F;package&#x2F;npm&#x2F;echarts 选择 dist&#x2F;echarts.js，点击并保存为 echarts.js 文件。    准备一个地图容器 ““    准备全国地图的json文件 http:&#x2F;&#x2F;datav.aliyun.com&#x2F;portal&#x2F;school&#x2F;atla">
+  <meta name="description" content="1.准备工作   在html文件中引入echart.js Echart资源获取 https:&#x2F;&#x2F;www.jsdelivr.com&#x2F;package&#x2F;npm&#x2F;echarts 选择 dist&#x2F;echarts.js，点击并保存为 echarts.js 文件。    准备一个地图容器 1&lt;div id&#x3D;&quot;map&quot;&gt;&lt;&#x2F;div&gt;   准备全国地图的json文件 ht">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识Echart-中国地图(可跳转省份)">
 <meta property="og:url" content="https://wen992.github.io/2022/02/16/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/index.html">
 <meta property="og:site_name" content="月露清酿">
-<meta property="og:description" content="1.准备工作   在html文件中引入echart.js Echart资源获取 https:&#x2F;&#x2F;www.jsdelivr.com&#x2F;package&#x2F;npm&#x2F;echarts 选择 dist&#x2F;echarts.js，点击并保存为 echarts.js 文件。    准备一个地图容器 ““    准备全国地图的json文件 http:&#x2F;&#x2F;datav.aliyun.com&#x2F;portal&#x2F;school&#x2F;atla">
+<meta property="og:description" content="1.准备工作   在html文件中引入echart.js Echart资源获取 https:&#x2F;&#x2F;www.jsdelivr.com&#x2F;package&#x2F;npm&#x2F;echarts 选择 dist&#x2F;echarts.js，点击并保存为 echarts.js 文件。    准备一个地图容器 1&lt;div id&#x3D;&quot;map&quot;&gt;&lt;&#x2F;div&gt;   准备全国地图的json文件 ht">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://wen992.github.io/2022/02/16/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/json1.png">
 <meta property="og:image" content="https://wen992.github.io/2022/02/16/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/%E8%BD%AC%E5%8C%96js.png">
 <meta property="og:image" content="https://wen992.github.io/2022/02/16/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE.png">
 <meta property="og:image" content="https://wen992.github.io/2022/02/16/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/%E5%AE%89%E5%BE%BD%E5%9C%B0%E5%9B%BE.png">
 <meta property="article:published_time" content="2022-02-16T02:39:18.000Z">
-<meta property="article:modified_time" content="2022-02-16T06:05:01.244Z">
+<meta property="article:modified_time" content="2022-02-16T06:16:17.672Z">
 <meta property="article:author" content="俞祥">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wen992.github.io/2022/02/16/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/json1.png">
@@ -188,7 +188,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-16 10:39:18 / 修改时间：14:05:01" itemprop="dateCreated datePublished" datetime="2022-02-16T10:39:18+08:00">2022-02-16</time>
+              <time title="创建时间：2022-02-16 10:39:18 / 修改时间：14:16:17" itemprop="dateCreated datePublished" datetime="2022-02-16T10:39:18+08:00">2022-02-16</time>
             </span>
 
           
@@ -208,11 +208,10 @@
 <p>选择 <code>dist/echarts.js</code>，点击并保存为 <code>echarts.js</code> 文件。</p>
 </li>
 <li><p><input checked disabled type="checkbox">  准备一个地图容器</p>
-<p>“<div id="map"></div>“</p>
-</li>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">id</span>=<span class="string">&quot;map&quot;</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure></li>
 <li><p><input checked disabled type="checkbox">  准备全国地图的json文件</p>
 <p><a target="_blank" rel="noopener" href="http://datav.aliyun.com/portal/school/atlas/area_selector#&amp;lat=33.521903996156105&amp;lng=104.29849999999999&amp;zoom=4">http://datav.aliyun.com/portal/school/atlas/area_selector#&amp;lat=33.521903996156105&amp;lng=104.29849999999999&amp;zoom=4</a></p>
-</li>
+<span id="more"></span></li>
 </ul>
 <h2 id="2-首先实现中国地图"><a href="#2-首先实现中国地图" class="headerlink" title="2.首先实现中国地图"></a>2.首先实现中国地图</h2><p>1.json格式文件不能直接引入，这里转化为js引入<br>例：   json文件：</p>
 <p><img src="/2022/02/16/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/json1.png"></p>
