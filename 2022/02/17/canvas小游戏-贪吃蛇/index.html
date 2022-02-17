@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wen992.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.游戏准备放一个容器盛放游戏场景 div#map，设置样式 123456#map &amp;#123;    width: 800px;    height: 600px;    background-color: #ccc;    position: relative;&amp;#125;  2.游戏分析以面向对象的角度    Game对象   (游戏对象，用来管理游戏中的所有对象和开始游戏)     ​">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向对象小游戏-贪吃蛇">
+<meta property="og:url" content="https://wen992.github.io/2022/02/17/canvas%E5%B0%8F%E6%B8%B8%E6%88%8F-%E8%B4%AA%E5%90%83%E8%9B%87/index.html">
+<meta property="og:site_name" content="月露清酿">
+<meta property="og:description" content="1.游戏准备放一个容器盛放游戏场景 div#map，设置样式 123456#map &amp;#123;    width: 800px;    height: 600px;    background-color: #ccc;    position: relative;&amp;#125;  2.游戏分析以面向对象的角度    Game对象   (游戏对象，用来管理游戏中的所有对象和开始游戏)     ​">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-17T00:58:14.000Z">
+<meta property="article:modified_time" content="2022-02-17T01:41:26.515Z">
+<meta property="article:author" content="俞祥">
+<meta property="article:tag" content="Javascript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://wen992.github.io/2022/02/17/canvas%E5%B0%8F%E6%B8%B8%E6%88%8F-%E8%B4%AA%E5%90%83%E8%9B%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+ 
+  
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script src="/js/cursor/explosion.min.js"></script>
+  
+
+
+  <title>面向对象小游戏-贪吃蛇 | 月露清酿</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">月露清酿</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">今晚的月色很美</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2022/02/17/canvas%E5%B0%8F%E6%B8%B8%E6%88%8F-%E8%B4%AA%E5%90%83%E8%9B%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="俞祥">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="月露清酿">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向对象小游戏-贪吃蛇
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-17 08:58:14 / 修改时间：09:41:26" itemprop="dateCreated datePublished" datetime="2022-02-17T08:58:14+08:00">2022-02-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-游戏准备"><a href="#1-游戏准备" class="headerlink" title="1.游戏准备"></a>1.游戏准备</h2><p>放一个容器盛放游戏场景 div#map，设置样式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#map</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">600px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#ccc</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-游戏分析"><a href="#2-游戏分析" class="headerlink" title="2.游戏分析"></a>2.游戏分析</h2><p>以面向对象的角度</p>
+<blockquote>
+<ol>
+<li> Game对象   (游戏对象，用来管理游戏中的所有对象和开始游戏)</li>
+</ol>
+<p>   ​        属性: food snake map</p>
+<p>   ​        方法: Game构造函数</p>
+<p>   ​                  init 初始化方法     将小蛇和食物显示出来</p>
+<p>   ​                  startGame方法    开启定时器，让小蛇移动</p>
+<p>   ​                  gameOver方法     检测到碰撞，游戏结束</p>
+   <span id="more"></span>
+
+<ol start="2">
+<li><p>Food对象   </p>
+<p>​        属性: x y color width height</p>
+<p>​        方法: 构造函数</p>
+<p>​                  init  初始化食物的方法，并输出到map上</p>
+<p>​                  remove 方法  移除食物的方法</p>
+</li>
+<li><p>Snake对象     </p>
+<p>​        属性: body数组，蛇的头部和身体，第一个位置是蛇头</p>
+</li>
+</ol>
+<p>​                       例：body [{x:1,y:1,color:red},{x:2,y:1,color:blue},{x:3,y:1,color:blue}]</p>
+<p>​                       width  height （蛇一节身体的宽高）</p>
+<p>​                       direction  蛇运动的方向</p>
+<p>​                方法: 构造方法</p>
+<p>​                          init 初始化小蛇</p>
+<p>​                          move  移动的方法</p>
+<p>​                          remove 移除小蛇的方法</p>
+</blockquote>
+<h2 id="3-游戏代码"><a href="#3-游戏代码" class="headerlink" title="3.游戏代码"></a>3.游戏代码</h2><p>1.获取页面地图</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> map = <span class="built_in">document</span>.getElementById(<span class="string">&quot;map&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>2.Food对象的自调用函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">w</span>) </span>&#123;</span><br><span class="line">       <span class="comment">//存放食物的数组</span></span><br><span class="line">       <span class="keyword">var</span> elements = [];</span><br><span class="line"></span><br><span class="line">       <span class="comment">//食物的构造函数</span></span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">Food</span>(<span class="params">x, y, width, height</span>) </span>&#123;</span><br><span class="line">         <span class="built_in">this</span>.x = x || <span class="number">0</span>;</span><br><span class="line">         <span class="built_in">this</span>.y = y || <span class="number">0</span>;</span><br><span class="line">         <span class="built_in">this</span>.width = width || <span class="number">20</span>;</span><br><span class="line">         <span class="built_in">this</span>.height = height || <span class="number">20</span>;</span><br><span class="line">         <span class="built_in">this</span>.color = <span class="string">&quot;green&quot;</span>;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//食物的初始化方法</span></span><br><span class="line">       Food.prototype.init = <span class="function"><span class="keyword">function</span> (<span class="params">map</span>) </span>&#123;</span><br><span class="line">         <span class="comment">//移除之前的食物</span></span><br><span class="line">         <span class="built_in">this</span>.remove();</span><br><span class="line">         <span class="comment">//指定食物的坐标</span></span><br><span class="line">         <span class="keyword">var</span> maxX = <span class="built_in">Math</span>.floor(map.offsetWidth / <span class="built_in">this</span>.width);</span><br><span class="line">         <span class="keyword">var</span> maxY = <span class="built_in">Math</span>.floor(map.offsetHeight / <span class="built_in">this</span>.height);</span><br><span class="line">         <span class="keyword">var</span> x = Random.getRandom(<span class="number">0</span>, maxX);</span><br><span class="line">         <span class="keyword">var</span> y = Random.getRandom(<span class="number">0</span>, maxY);</span><br><span class="line">         <span class="built_in">this</span>.x = x;</span><br><span class="line">         <span class="built_in">this</span>.y = y;</span><br><span class="line"></span><br><span class="line">         <span class="comment">//创建页面元素</span></span><br><span class="line">         <span class="keyword">var</span> foodEle = <span class="built_in">document</span>.createElement(<span class="string">&quot;div&quot;</span>);</span><br><span class="line">         foodEle.style.position = <span class="string">&quot;absolute&quot;</span>;</span><br><span class="line">         foodEle.style.width = <span class="built_in">this</span>.width + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">         foodEle.style.height = <span class="built_in">this</span>.height + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">         foodEle.style.backgroundColor = <span class="built_in">this</span>.color;</span><br><span class="line">         foodEle.style.left = <span class="built_in">this</span>.x * <span class="built_in">this</span>.width + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">         foodEle.style.top = <span class="built_in">this</span>.y * <span class="built_in">this</span>.height + <span class="string">&quot;px&quot;</span>;</span><br><span class="line"></span><br><span class="line">         <span class="comment">//把食物添加到页面</span></span><br><span class="line">         map.appendChild(foodEle);</span><br><span class="line">         <span class="comment">//把食物添加到数组里面</span></span><br><span class="line">         elements.push(foodEle);</span><br><span class="line">       &#125;;</span><br><span class="line"></span><br><span class="line">       w.Food = Food;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//移除食物的方法 （私有方法）</span></span><br><span class="line">       Food.prototype.remove = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">         <span class="comment">//要分别从页面和数组中移除</span></span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">var</span> i = elements.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">           <span class="keyword">var</span> ele = elements[i];</span><br><span class="line">           ele.parentNode.removeChild(ele);</span><br><span class="line">           elements.splice(i, <span class="number">1</span>);</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">     &#125;)(<span class="built_in">window</span>);</span><br></pre></td></tr></table></figure>
+
+<p>3.Snake的自调用函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">(function (w) &#123;</span><br><span class="line">       <span class="comment">//存放小蛇身躯的数组</span></span><br><span class="line">       <span class="keyword">var</span> elements = [];</span><br><span class="line">       <span class="comment">//小蛇的构造函数</span></span><br><span class="line">       function Snake(width, height, direction) &#123;</span><br><span class="line">         <span class="keyword">this</span>.width = width || <span class="number">20</span>;</span><br><span class="line">         <span class="keyword">this</span>.height = height || <span class="number">20</span>;</span><br><span class="line">         <span class="keyword">this</span>.direction = direction || <span class="string">&quot;right&quot;</span>;</span><br><span class="line">         <span class="comment">//小蛇身躯</span></span><br><span class="line">         <span class="keyword">this</span>.body = [</span><br><span class="line">           &#123; x: <span class="number">3</span>, y: <span class="number">2</span>, color: <span class="string">&quot;red&quot;</span> &#125;,</span><br><span class="line">           &#123; x: <span class="number">2</span>, y: <span class="number">2</span>, color: <span class="string">&quot;green&quot;</span> &#125;,</span><br><span class="line">           &#123; x: <span class="number">1</span>, y: <span class="number">2</span>, color: <span class="string">&quot;green&quot;</span> &#125;,</span><br><span class="line">         ];</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//小蛇的初始化方法</span></span><br><span class="line">       Snake.prototype.<span class="keyword">init</span> = function (map) &#123;</span><br><span class="line">         <span class="comment">//移除之前的小蛇</span></span><br><span class="line">         <span class="keyword">this</span>.remove();</span><br><span class="line">         <span class="comment">//创建小蛇的每一个身躯</span></span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.body.length; i++) &#123;</span><br><span class="line">           <span class="keyword">var</span> item = <span class="keyword">this</span>.body[i];</span><br><span class="line">           <span class="keyword">var</span> bodyEle = document.createElement(<span class="string">&quot;div&quot;</span>);</span><br><span class="line">           bodyEle.style.position = <span class="string">&quot;absolute&quot;</span>;</span><br><span class="line">           bodyEle.style.width = <span class="keyword">this</span>.width + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">           bodyEle.style.height = <span class="keyword">this</span>.height + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">           bodyEle.style.backgroundColor = item.color;</span><br><span class="line">           bodyEle.style.left = item.x * <span class="keyword">this</span>.width + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">           bodyEle.style.top = item.y * <span class="keyword">this</span>.height + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">           map.appendChild(bodyEle);</span><br><span class="line">           elements.push(bodyEle);</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">       <span class="comment">//移除小蛇的方法</span></span><br><span class="line">       Snake.prototype.remove = function () &#123;</span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">var</span> i = elements.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">           elements[i].parentNode.removeChild(elements[i]);</span><br><span class="line">           elements.splice(i, <span class="number">1</span>);</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">       <span class="comment">//小蛇移动的方法</span></span><br><span class="line">       Snake.prototype.move = function (map) &#123;</span><br><span class="line">         <span class="comment">//改变非蛇头部分坐标</span></span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="keyword">this</span>.body.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">           <span class="keyword">this</span>.body[i].x = <span class="keyword">this</span>.body[i - <span class="number">1</span>].x;</span><br><span class="line">           <span class="keyword">this</span>.body[i].y = <span class="keyword">this</span>.body[i - <span class="number">1</span>].y;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="comment">//改变蛇头部分坐标</span></span><br><span class="line">         switch (<span class="keyword">this</span>.direction) &#123;</span><br><span class="line">           case <span class="string">&quot;right&quot;</span>:</span><br><span class="line">             <span class="keyword">this</span>.body[<span class="number">0</span>].x += <span class="number">1</span>;</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">           case <span class="string">&quot;left&quot;</span>:</span><br><span class="line">             <span class="keyword">this</span>.body[<span class="number">0</span>].x -= <span class="number">1</span>;</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">           case <span class="string">&quot;up&quot;</span>:</span><br><span class="line">             <span class="keyword">this</span>.body[<span class="number">0</span>].y -= <span class="number">1</span>;</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">           case <span class="string">&quot;down&quot;</span>:</span><br><span class="line">             <span class="keyword">this</span>.body[<span class="number">0</span>].y += <span class="number">1</span>;</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">           default:</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">this</span>.<span class="keyword">init</span>(map);</span><br><span class="line">       &#125;;</span><br><span class="line">       w.Snake = Snake;</span><br><span class="line">     &#125;)(window);</span><br></pre></td></tr></table></figure>
+
+<p>4.Game的自调用函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">w</span>) </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">Game</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">         <span class="built_in">this</span>.food = <span class="keyword">new</span> Food();</span><br><span class="line">         <span class="built_in">this</span>.snake = <span class="keyword">new</span> Snake();</span><br><span class="line">         <span class="built_in">this</span>.map = <span class="built_in">document</span>.getElementById(<span class="string">&quot;map&quot;</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       Game.prototype.startGame = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">         <span class="built_in">this</span>.bindKey();</span><br><span class="line">         <span class="built_in">this</span>.food.init(<span class="built_in">this</span>.map);</span><br><span class="line">         <span class="built_in">this</span>.snake.init(<span class="built_in">this</span>.map);</span><br><span class="line">         <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">           <span class="built_in">this</span>.snake.move(<span class="built_in">this</span>.map);</span><br><span class="line">         &#125;, <span class="number">300</span>);</span><br><span class="line">       &#125;;</span><br><span class="line">       <span class="comment">//绑定键盘的按键</span></span><br><span class="line">       Game.prototype.bindKey = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">         <span class="keyword">var</span> that = <span class="built_in">this</span>;</span><br><span class="line">         <span class="built_in">document</span>.onkeydown = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">           <span class="keyword">var</span> e = e || <span class="built_in">window</span>.event;</span><br><span class="line">           <span class="keyword">switch</span> (e.keyCode) &#123;</span><br><span class="line">             <span class="comment">//上</span></span><br><span class="line">             <span class="keyword">case</span> <span class="number">38</span>:</span><br><span class="line">               that.snake.direction = <span class="string">&quot;up&quot;</span>;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">             <span class="comment">//右</span></span><br><span class="line">             <span class="keyword">case</span> <span class="number">39</span>:</span><br><span class="line">               that.snake.direction = <span class="string">&quot;right&quot;</span>;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">             <span class="comment">//下</span></span><br><span class="line">             <span class="keyword">case</span> <span class="number">40</span>:</span><br><span class="line">               that.snake.direction = <span class="string">&quot;down&quot;</span>;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">             <span class="comment">//左</span></span><br><span class="line">             <span class="keyword">case</span> <span class="number">37</span>:</span><br><span class="line">               that.snake.direction = <span class="string">&quot;left&quot;</span>;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">             <span class="keyword">default</span>:</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;;</span><br><span class="line">       &#125;;</span><br><span class="line"></span><br><span class="line">       w.Game = Game;</span><br><span class="line">     &#125;)(<span class="built_in">window</span>);</span><br></pre></td></tr></table></figure>
+
+<p>5.主程序逻辑</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&quot;startGame&quot;</span>).onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">var</span> game = <span class="keyword">new</span> Game();</span><br><span class="line">       game.startGame();</span><br><span class="line">     &#125;;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    <div>
+      
+        <div>
+      
+          <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+      
+  </div>
+      
+    </div>
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/16/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/" rel="prev" title="初识Echart-中国地图(可跳转省份)">
+      <i class="fa fa-chevron-left"></i> 初识Echart-中国地图(可跳转省份)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%B8%B8%E6%88%8F%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">1.游戏准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%B8%B8%E6%88%8F%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">2.游戏分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B8%B8%E6%88%8F%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">3.游戏代码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">俞祥</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+      
+        <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+        <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+        <div class="widget-wrap">
+            <h3 class="widget-title">Tag Cloud</h3>
+            <div id="myCanvasContainer" class="widget tagcloud">
+                <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echart/" rel="tag">Echart</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a><span class="tag-list-count">1</span></li></ul>
+                </canvas>
+            </div>
+        </div>
+      
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">俞祥</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script color='' opacity='' zIndex='' count='' src="/lib/canvas-nest/canvas-nest-nomobile.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
