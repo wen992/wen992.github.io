@@ -159,6 +159,77 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2022/02/17/%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="俞祥">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="月露清酿">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/17/%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">跨域的常用解决方案</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-17 10:02:22 / 修改时间：10:44:18" itemprop="dateCreated datePublished" datetime="2022-02-17T10:02:22+08:00">2022-02-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="1-跨域的原因"><a href="#1-跨域的原因" class="headerlink" title="1.跨域的原因"></a>1.跨域的原因</h4><p>​    浏览器的同源策略导致了跨域。当我们在前端开发中使用ajax/fetch这些技术发送网络请求的时候，当协议、主机、端口有任何一个不一致的时候，则构成跨域。</p>
+<h4 id="2-跨域问题的解决"><a href="#2-跨域问题的解决" class="headerlink" title="2.跨域问题的解决"></a>2.跨域问题的解决</h4><p>1.jsonp ，允许 script 加载第三方资源</p>
+<p>​    具体是通过动态创建 script 标签向服务器发送请求，然后服务器返回一段JS脚本给客户端，然后客户端收到JS脚本立马执行对应的代码。为此，服务器应该设置响应头为 application/javascript</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/17/%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2022/02/17/canvas%E5%B0%8F%E6%B8%B8%E6%88%8F-%E8%B4%AA%E5%90%83%E8%9B%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -184,7 +255,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-17 08:58:14 / 修改时间：09:41:26" itemprop="dateCreated datePublished" datetime="2022-02-17T08:58:14+08:00">2022-02-17</time>
+              <time title="创建时间：2022-02-17 08:58:14 / 修改时间：09:53:20" itemprop="dateCreated datePublished" datetime="2022-02-17T08:58:14+08:00">2022-02-17</time>
             </span>
 
           
@@ -200,17 +271,6 @@
       
           <h2 id="1-游戏准备"><a href="#1-游戏准备" class="headerlink" title="1.游戏准备"></a>1.游戏准备</h2><p>放一个容器盛放游戏场景 div#map，设置样式</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#map</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">600px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#ccc</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-游戏分析"><a href="#2-游戏分析" class="headerlink" title="2.游戏分析"></a>2.游戏分析</h2><p>以面向对象的角度</p>
-<blockquote>
-<ol>
-<li> Game对象   (游戏对象，用来管理游戏中的所有对象和开始游戏)</li>
-</ol>
-<p>   ​        属性: food snake map</p>
-<p>   ​        方法: Game构造函数</p>
-<p>   ​                  init 初始化方法     将小蛇和食物显示出来</p>
-<p>   ​                  startGame方法    开启定时器，让小蛇移动</p>
-<p>   ​                  gameOver方法     检测到碰撞，游戏结束</p></blockquote>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/02/17/canvas%E5%B0%8F%E6%B8%B8%E6%88%8F-%E8%B4%AA%E5%90%83%E8%9B%87/#more" rel="contents">
@@ -600,7 +660,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -623,7 +683,7 @@
             <h3 class="widget-title">Tag Cloud</h3>
             <div id="myCanvasContainer" class="widget tagcloud">
                 <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echart/" rel="tag">Echart</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a><span class="tag-list-count">1</span></li></ul>
+                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echart/" rel="tag">Echart</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a><span class="tag-list-count">1</span></li></ul>
                 </canvas>
             </div>
         </div>
