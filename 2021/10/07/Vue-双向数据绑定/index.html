@@ -20,15 +20,22 @@
     var CONFIG = {"hostname":"wen992.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="月露清酿">
-<meta property="og:url" content="https://wen992.github.io/archives/2021/10/index.html">
+  <meta name="description" content="vue数据驱动1.由页面-&gt;数据的变化：通过给页面元素添加对应的事件监听来实现的 1234&lt;input v-model&#x3D;&quot;value&quot; oninput&#x3D;&quot;()&#x3D;&gt;this.handleInput($event)&quot;&gt;function handleInput(e)&amp;#123;    this.value &#x3D; e.target.value&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue-双向数据绑定">
+<meta property="og:url" content="https://wen992.github.io/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/index.html">
 <meta property="og:site_name" content="月露清酿">
+<meta property="og:description" content="vue数据驱动1.由页面-&gt;数据的变化：通过给页面元素添加对应的事件监听来实现的 1234&lt;input v-model&#x3D;&quot;value&quot; oninput&#x3D;&quot;()&#x3D;&gt;this.handleInput($event)&quot;&gt;function handleInput(e)&amp;#123;    this.value &#x3D; e.target.value&amp;">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wen992.github.io/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85.png">
+<meta property="article:published_time" content="2021-10-07T09:37:20.000Z">
+<meta property="article:modified_time" content="2022-02-19T09:55:59.055Z">
 <meta property="article:author" content="俞祥">
+<meta property="article:tag" content="Vue">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wen992.github.io/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85.png">
 
-<link rel="canonical" href="https://wen992.github.io/archives/2021/10/">
+<link rel="canonical" href="https://wen992.github.io/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/">
 
 
 <script id="page-configurations">
@@ -36,7 +43,7 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
@@ -49,7 +56,7 @@
   
 
 
-  <title>归档 | 月露清酿</title>
+  <title>Vue-双向数据绑定 | 月露清酿</title>
   
 
 
@@ -153,110 +160,101 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 12 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="俞祥">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="月露清酿">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue-双向数据绑定
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 17:37:20" itemprop="dateCreated datePublished" datetime="2021-10-07T17:37:20+08:00">2021-10-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
+        <h4 id="vue数据驱动"><a href="#vue数据驱动" class="headerlink" title="vue数据驱动"></a>vue数据驱动</h4><p>1.由页面-&gt;数据的变化：通过给页面元素添加对应的事件监听来实现的</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="attribute">v-model</span>=<span class="string">&quot;value&quot;</span> <span class="attribute">oninput</span>=<span class="string">&quot;()=&gt;this.handleInput(<span class="variable">$event</span>)&quot;</span>&gt;</span><br><span class="line">function handleInput(e)&#123;</span><br><span class="line">    this.value = e.target.value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>2.1 在vue options api中 数据-&gt;页面的变化：通过数据劫持（Object.defineProperty） + 发布订阅模式来实现的</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">具体流程：</span><br><span class="line">    <span class="selector-tag">A</span><span class="selector-class">.Compile</span>解析器会将页面上的插值表达式/指定翻译成对应<span class="selector-tag">Watcher</span>以添加到订阅器维护的列表中</span><br><span class="line">    <span class="selector-tag">B</span>.通过<span class="selector-tag">Object</span><span class="selector-class">.defineProperty</span> (Proxy)劫持数据的变化，一旦数据源发生变化会触发对应的<span class="selector-tag">set</span>方法</span><br><span class="line">    <span class="selector-tag">C</span>.在<span class="selector-tag">set</span>方法中，通知订阅器(Dep)对象中维护的所有订阅者(Watcher)列表更新</span><br><span class="line">    <span class="selector-tag">D</span>.每一个<span class="selector-tag">Watch</span>会去更新对应的页面</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-29T20:39:18+08:00"
-              content="2021-10-29">
-          10-29
-        </time>
-      </div>
+<p>2.2 在vue composition api中，数据-&gt;页面的变化是通过响应式系统来实现的</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">其内部是通过proxy来实现响应式 ，在proxy的<span class="built_in">get</span>函数中，收集依赖，并存储响应式数据与更新函数 <span class="keyword">cb</span> 的映射关系；在proxy的<span class="keyword">set</span>中，触发相应式数据对应的更新函数<span class="keyword">cb</span></span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/29/%E5%88%9D%E8%AF%86Echart-%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE%E5%AE%9E-%E5%8F%AF%E8%B7%B3%E8%BD%AC%E7%9C%81%E4%BB%BD/" itemprop="url">
-            <span itemprop="name">Echart-中国地图(可跳转省份)</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-16T19:39:31+08:00"
-              content="2021-10-16">
-          10-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/16/Vue-Router%E5%AF%BC%E8%88%AA%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B/" itemprop="url">
-            <span itemprop="name">Vue-Router导航解析流程</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-07T17:37:20+08:00"
-              content="2021-10-07">
-          10-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" itemprop="url">
-            <span itemprop="name">Vue-双向数据绑定</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-10-03T09:19:23+08:00"
-              content="2021-10-03">
-          10-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/10/03/vue-router%E5%8E%9F%E7%90%86/" itemprop="url">
-            <span itemprop="name">Vue-Router原理</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<p>3.关于发布订阅模式<br>发布订阅模式又叫观察者模式，他定义了一种一对多的关系，让多个观察者对象同时监听某一个主体对象的变化，当这个主题对象的状态发生变化的时候就会通知所有的观察者对象，是的他们能够自动更新自己。</p>
+<p><img src="/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85.png"></p>
 
     </div>
+
+    <div>
+      
+        <div>
+      
+          <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+      
   </div>
-  
-  
-  
+      
+    </div>
+    
+    
+    
 
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/03/vue-router%E5%8E%9F%E7%90%86/" rel="prev" title="Vue-Router原理">
+      <i class="fa fa-chevron-left"></i> Vue-Router原理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/16/Vue-Router%E5%AF%BC%E8%88%AA%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B/" rel="next" title="Vue-Router导航解析流程">
+      Vue-Router导航解析流程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -309,6 +307,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#vue%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">vue数据驱动</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

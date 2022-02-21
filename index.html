@@ -159,6 +159,74 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2022/01/13/native-base%E4%B8%ADInput%E7%BB%84%E4%BB%B6%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="俞祥">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="月露清酿">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/13/native-base%E4%B8%ADInput%E7%BB%84%E4%BB%B6%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/" class="post-title-link" itemprop="url">native-base中Input组件数据双向绑定</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-13 20:44:47" itemprop="dateCreated datePublished" datetime="2022-01-13T20:44:47+08:00">2022-01-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="Native-Base中Input组件数据双向绑定"><a href="#Native-Base中Input组件数据双向绑定" class="headerlink" title="Native-Base中Input组件数据双向绑定"></a>Native-Base中Input组件数据双向绑定</h4><p>在使用react-native开发过程中，引入了Native-Base组件库。</p>
+<p>项目中需要一个登陆的页面，于是我就直接引入了native-base中的Input到页面中，由于需要拿到用户输入的内容，所以我定义了一个变量，把它赋给Input的value属性，通过组件自带的监听事件<code>onChange</code>来改变变量的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Test = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> [text,setText] =useState(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    <span class="keyword">const</span> changetext=<span class="function">(<span class="params">e</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e.target.value)<span class="comment">//打印undefine</span></span><br><span class="line">        <span class="comment">//正确方法</span></span><br><span class="line">        setText(e.nativeEvent.text)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">NativeBaseProvider</span>&gt;</span></span></span><br><span class="line"><span class="xml">         <span class="tag">&lt;<span class="name">Input</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">         <span class="attr">value</span>=<span class="string">&#123;text&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">         <span class="attr">onChange</span>=<span class="string">&#123;changetext&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">        /&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">NativeBaseProvider</span>&gt;</span></span> )</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很疑惑，因为React中就是使用这种方法拿到用户输入的值，于是我就把e打印出来一个一个找，发现此时用户输入的值是e.nativeEvent.text，更改之后便可以正常绑定文本框与state中的值。</p>
+<p>其次，在NativeBase中的Input组件还有一个方法onChangeText，入参value就是用户输入的内容。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Test = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> [text,setText] =useState(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">NativeBaseProvider</span>&gt;</span></span></span><br><span class="line"><span class="xml">         <span class="tag">&lt;<span class="name">Input</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">         <span class="attr">value</span>=<span class="string">&#123;text&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">         <span class="attr">onChangeText</span>=<span class="string">&#123;(value)</span>=&gt;</span>setText(value)&#125;</span></span><br><span class="line"><span class="xml">        /&gt;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Text</span>&gt;</span>&#123;text&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span> </span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">NativeBaseProvider</span>&gt;</span></span> )</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2021/12/19/React%E6%B8%B2%E6%9F%93%E5%AF%8C%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -185,13 +253,6 @@
 
               <time title="创建时间：2021-12-19 14:41:34" itemprop="dateCreated datePublished" datetime="2021-12-19T14:41:34+08:00">2021-12-19</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-19 15:25:38" itemprop="dateModified" datetime="2022-02-19T15:25:38+08:00">2022-02-19</time>
-              </span>
 
           
 
@@ -256,13 +317,6 @@
 
               <time title="创建时间：2021-11-17 10:02:22" itemprop="dateCreated datePublished" datetime="2021-11-17T10:02:22+08:00">2021-11-17</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 13:44:17" itemprop="dateModified" datetime="2022-02-17T13:44:17+08:00">2022-02-17</time>
-              </span>
 
           
 
@@ -333,13 +387,6 @@
 
               <time title="创建时间：2021-11-07 14:38:53" itemprop="dateCreated datePublished" datetime="2021-11-07T14:38:53+08:00">2021-11-07</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 20:55:41" itemprop="dateModified" datetime="2022-02-17T20:55:41+08:00">2022-02-17</time>
-              </span>
 
           
 
@@ -408,13 +455,6 @@
 
               <time title="创建时间：2021-11-05 23:07:10" itemprop="dateCreated datePublished" datetime="2021-11-05T23:07:10+08:00">2021-11-05</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 20:37:11" itemprop="dateModified" datetime="2022-02-17T20:37:11+08:00">2022-02-17</time>
-              </span>
 
           
 
@@ -486,13 +526,6 @@
 
               <time title="创建时间：2021-10-29 20:39:18" itemprop="dateCreated datePublished" datetime="2021-10-29T20:39:18+08:00">2021-10-29</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 15:20:03" itemprop="dateModified" datetime="2022-02-17T15:20:03+08:00">2022-02-17</time>
-              </span>
 
           
 
@@ -543,6 +576,148 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2021/10/16/Vue-Router%E5%AF%BC%E8%88%AA%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="俞祥">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="月露清酿">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/16/Vue-Router%E5%AF%BC%E8%88%AA%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">Vue-Router导航解析流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-16 19:39:31" itemprop="dateCreated datePublished" datetime="2021-10-16T19:39:31+08:00">2021-10-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Vue-Router导航解析"><a href="#Vue-Router导航解析" class="headerlink" title="Vue-Router导航解析"></a>Vue-Router导航解析</h3><p>vue-router是vue框架御用的官方路由。它与 Vue.js 核心深度集成，让用 Vue.js 构建单页应用变得轻而易举。</p>
+<p>今天我们关注的便是vue-router的导航解析流程，说到这里，我们不得不提一下它的导航守卫。</p>
+<h4 id="1-vue-router导航守卫（三种）"><a href="#1-vue-router导航守卫（三种）" class="headerlink" title="1.vue-router导航守卫（三种）"></a>1.vue-router导航守卫（三种）</h4><p>1.全局守卫：router.beforeEach  router.beforeResolve  router.afterEach</p>
+<p>​    路由实例上直接操作的钩子函数，他的特点是所有路由配置的组件都会触发，直白点就是触发路由就会触发这些钩子函数</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/16/Vue-Router%E5%AF%BC%E8%88%AA%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="俞祥">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="月露清酿">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" class="post-title-link" itemprop="url">Vue-双向数据绑定</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 17:37:20" itemprop="dateCreated datePublished" datetime="2021-10-07T17:37:20+08:00">2021-10-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="vue数据驱动"><a href="#vue数据驱动" class="headerlink" title="vue数据驱动"></a>vue数据驱动</h4><p>1.由页面-&gt;数据的变化：通过给页面元素添加对应的事件监听来实现的</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="attribute">v-model</span>=<span class="string">&quot;value&quot;</span> <span class="attribute">oninput</span>=<span class="string">&quot;()=&gt;this.handleInput(<span class="variable">$event</span>)&quot;</span>&gt;</span><br><span class="line">function handleInput(e)&#123;</span><br><span class="line">    this.value = e.target.value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.1 在vue options api中 数据-&gt;页面的变化：通过数据劫持（Object.defineProperty） + 发布订阅模式来实现的</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">具体流程：</span><br><span class="line">    <span class="selector-tag">A</span><span class="selector-class">.Compile</span>解析器会将页面上的插值表达式/指定翻译成对应<span class="selector-tag">Watcher</span>以添加到订阅器维护的列表中</span><br><span class="line">    <span class="selector-tag">B</span>.通过<span class="selector-tag">Object</span><span class="selector-class">.defineProperty</span> (Proxy)劫持数据的变化，一旦数据源发生变化会触发对应的<span class="selector-tag">set</span>方法</span><br><span class="line">    <span class="selector-tag">C</span>.在<span class="selector-tag">set</span>方法中，通知订阅器(Dep)对象中维护的所有订阅者(Watcher)列表更新</span><br><span class="line">    <span class="selector-tag">D</span>.每一个<span class="selector-tag">Watch</span>会去更新对应的页面</span><br></pre></td></tr></table></figure>
+
+<p>2.2 在vue composition api中，数据-&gt;页面的变化是通过响应式系统来实现的</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">其内部是通过proxy来实现响应式 ，在proxy的<span class="built_in">get</span>函数中，收集依赖，并存储响应式数据与更新函数 <span class="keyword">cb</span> 的映射关系；在proxy的<span class="keyword">set</span>中，触发相应式数据对应的更新函数<span class="keyword">cb</span></span><br></pre></td></tr></table></figure>
+
+<p>3.关于发布订阅模式<br>发布订阅模式又叫观察者模式，他定义了一种一对多的关系，让多个观察者对象同时监听某一个主体对象的变化，当这个主题对象的状态发生变化的时候就会通知所有的观察者对象，是的他们能够自动更新自己。</p>
+<p><img src="/2021/10/07/Vue-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85.png"></p>
+
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2021/10/03/vue-router%E5%8E%9F%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -569,13 +744,6 @@
 
               <time title="创建时间：2021-10-03 09:19:23" itemprop="dateCreated datePublished" datetime="2021-10-03T09:19:23+08:00">2021-10-03</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-18 10:08:23" itemprop="dateModified" datetime="2022-02-18T10:08:23+08:00">2022-02-18</time>
-              </span>
 
           
 
@@ -649,13 +817,6 @@
 
               <time title="创建时间：2021-09-21 08:58:14" itemprop="dateCreated datePublished" datetime="2021-09-21T08:58:14+08:00">2021-09-21</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 11:50:42" itemprop="dateModified" datetime="2022-02-17T11:50:42+08:00">2022-02-17</time>
-              </span>
 
           
 
@@ -695,159 +856,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2021/09/13/date%E6%A0%BC%E5%BC%8F%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="俞祥">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="月露清酿">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/13/date%E6%A0%BC%E5%BC%8F%E5%8C%96/" class="post-title-link" itemprop="url">date格式化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-13 20:29:56" itemprop="dateCreated datePublished" datetime="2021-09-13T20:29:56+08:00">2021-09-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 11:50:04" itemprop="dateModified" datetime="2022-02-17T11:50:04+08:00">2022-02-17</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-格式化日期对象"><a href="#1-格式化日期对象" class="headerlink" title="1. 格式化日期对象"></a>1. 格式化日期对象</h2><p>格式化日期对象，返回yyyy-MM-dd HH:mm:ss的形式</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatDate</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//如果date不是日期对象，返回</span></span><br><span class="line">  <span class="keyword">if</span> (!date <span class="keyword">instanceof</span> <span class="built_in">Date</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> year = d.getFullYear(),</span><br><span class="line">      month = d.getMonth() + <span class="number">1</span>, </span><br><span class="line">      date = d.getDate(), </span><br><span class="line">      hour = d.getHours(), </span><br><span class="line">      minute = d.getMinutes(), </span><br><span class="line">      second = d.getSeconds();</span><br><span class="line">  month = month &lt; <span class="number">10</span> ? <span class="string">&#x27;0&#x27;</span> + month : month;</span><br><span class="line">  date = date &lt; <span class="number">10</span> ? <span class="string">&#x27;0&#x27;</span> + date : date;</span><br><span class="line">  hour = hour &lt; <span class="number">10</span> ? <span class="string">&#x27;0&#x27;</span> + hour : hour;</span><br><span class="line">  minute = minute &lt; <span class="number">10</span> ? <span class="string">&#x27;0&#x27;</span> + minute:minute;</span><br><span class="line">  second = second &lt; <span class="number">10</span> ? <span class="string">&#x27;0&#x27;</span> + second:second;</span><br><span class="line">  <span class="keyword">return</span> year + <span class="string">&#x27;-&#x27;</span> + month + <span class="string">&#x27;-&#x27;</span> + date + <span class="string">&#x27; &#x27;</span> + hour + <span class="string">&#x27;:&#x27;</span> + minute + <span class="string">&#x27;:&#x27;</span> + second;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/13/date%E6%A0%BC%E5%BC%8F%E5%8C%96/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wen992.github.io/2021/09/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="俞祥">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="月露清酿">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">我的第一篇博客</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-10 21:09:42" itemprop="dateCreated datePublished" datetime="2021-09-10T21:09:42+08:00">2021-09-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-17 11:37:23" itemprop="dateModified" datetime="2022-02-17T11:37:23+08:00">2022-02-17</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          加密内容, 请输入密码查看.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/10/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -912,7 +925,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -935,7 +948,7 @@
             <h3 class="widget-title">Tag Cloud</h3>
             <div id="myCanvasContainer" class="widget tagcloud">
                 <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echart/" rel="tag">Echart</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WX/" rel="tag">WX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wen/" rel="tag">wen</a><span class="tag-list-count">1</span></li></ul>
+                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Echart/" rel="tag">Echart</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/" rel="tag">Javascript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WX/" rel="tag">WX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wen/" rel="tag">wen</a><span class="tag-list-count">1</span></li></ul>
                 </canvas>
             </div>
         </div>
